@@ -44,7 +44,7 @@
       height: 280px;
       background: var(--card);
       border-radius: 18px;
-      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
       padding: 24px;
       text-align: right;
       direction: rtl;
@@ -223,18 +223,8 @@
       height: 16px;
     }
 
-    /* Initial light mode */
+    /* Initial dark mode */
     body {
-      --bg: var(--bg-light);
-      --card: var(--card-light);
-      --text: var(--text-light);
-      --text-secondary: var(--text-secondary-light);
-      --accent: var(--accent-light);
-      --border: var(--border-light);
-      --quote: var(--quote-light);
-    }
-
-    body.dark-mode {
       --bg: var(--bg-dark);
       --card: var(--card-dark);
       --text: var(--text-dark);
@@ -242,6 +232,16 @@
       --accent: var(--accent-dark);
       --border: var(--border-dark);
       --quote: var(--quote-dark);
+    }
+
+    body.light-mode {
+      --bg: var(--bg-light);
+      --card: var(--card-light);
+      --text: var(--text-light);
+      --text-secondary: var(--text-secondary-light);
+      --accent: var(--accent-light);
+      --border: var(--border-light);
+      --quote: var(--quote-light);
     }
   </style>
 </head>
@@ -266,8 +266,8 @@
     </div>
     <div class="controls">
       <div class="theme-toggle">
-        <button class="theme-btn active" id="light-btn" title="وضع فاتح">☀️</button>
-        <button class="theme-btn" id="dark-btn" title="وضع داكن">🌙</button>
+        <button class="theme-btn" id="light-btn" title="وضع فاتح">☀️</button>
+        <button class="theme-btn active" id="dark-btn" title="وضع داكن">🌙</button>
       </div>
       <button class="next-btn" id="next-btn">
         <span>آية جديدة</span>
@@ -313,13 +313,16 @@
     ];
 
     let currentVerseIndex = 0;
-    let isDarkMode = false;
+    let isDarkMode = true;
     const verseTextEl = document.getElementById('verse-text');
     const verseRefEl = document.getElementById('verse-ref');
     const nextBtn = document.getElementById('next-btn');
     const lightBtn = document.getElementById('light-btn');
     const darkBtn = document.getElementById('dark-btn');
     const body = document.body;
+
+    // Set dark mode by default
+    body.classList.add('dark-mode');
 
     // Resize text to fit container without cutting words
     function fitTextToContainer() {
@@ -354,11 +357,13 @@
     function applyTheme(theme) {
       isDarkMode = theme === 'dark';
       if (isDarkMode) {
+        body.classList.remove('light-mode');
         body.classList.add('dark-mode');
         darkBtn.classList.add('active');
         lightBtn.classList.remove('active');
       } else {
         body.classList.remove('dark-mode');
+        body.classList.add('light-mode');
         lightBtn.classList.add('active');
         darkBtn.classList.remove('active');
       }
@@ -378,8 +383,7 @@
       showVerse(currentVerseIndex);
     }
 
-    // Initialize
-    applyTheme('light');
+    // Initialize with first verse in dark mode
     showVerse(currentVerseIndex);
     
     // Adjust on load and resize
@@ -395,3 +399,4 @@
   </script>
 </body>
 </html>
+
