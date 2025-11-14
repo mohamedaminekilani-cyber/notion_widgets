@@ -54,7 +54,7 @@
 </head>
 <body>
 <div class="widget-container">
-  <div class="header">✝ Bible Verse</div>
+  <div class="header">✝️ Bible Verse</div>
   <div class="verse-text" id="verse-text"></div>
   <div class="verse-ref" id="verse-ref"></div>
 </div>
@@ -76,8 +76,8 @@ const bibleVerses = [
 function showRandomVerse() {
   const index = Math.floor(Math.random() * bibleVerses.length);
   const verse = bibleVerses[index];
-  document.getElementById("verse-text").textContent = "${verse.text}";
-  document.getElementById("verse-ref").textContent = — ${verse.ref};
+  document.getElementById("verse-text").textContent = `"${verse.text}"`;
+  document.getElementById("verse-ref").textContent = `— ${verse.ref}`;
 }
 
 // Ensure script runs after DOM is fully loaded
