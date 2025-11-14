@@ -15,13 +15,13 @@
       --border-light: #e2e8f0;
       --quote-light: #cbd5e0;
 
-      --bg-dark: #2F3438;
-      --card-dark: #3a4045;
+      --bg-dark: #191919;
+      --card-dark: #2d2d2d;
       --text-dark: #f1f5f9;
       --text-secondary-dark: #a0aec0;
       --accent-dark: #60a5fa;
-      --border-dark: #4a5560;
-      --quote-dark: #64748b;
+      --border-dark: #444444;
+      --quote-dark: #666666;
     }
 
     body {
@@ -321,42 +321,33 @@
     const darkBtn = document.getElementById('dark-btn');
     const body = document.body;
 
-    // Fit text without cutting words
+    // Resize text to fit container without cutting words
     function fitTextToContainer() {
       const container = document.querySelector('.verse-container');
       const textEl = verseTextEl;
+      const refEl = verseRefEl;
       
       // Reset to base size
       textEl.style.fontSize = '20px';
-      textEl.style.lineHeight = '1.5';
       
-      const containerHeight = container.clientHeight - 40; // Account for reference and spacing
-      const containerWidth = container.clientWidth - 32; // Account for padding
+      // Get available height for verse text (container height minus ref height and margins)
+      const containerHeight = container.clientHeight;
+      const refHeight = refEl.offsetHeight;
+      const availableHeight = containerHeight - refHeight - 32; // 32px for margins and spacing
       
-      // Measure text
-      const span = document.createElement('span');
-      span.style.fontFamily = getComputedStyle(textEl).fontFamily;
-      span.style.fontWeight = getComputedStyle(textEl).fontWeight;
-      span.style.visibility = 'hidden';
-      span.style.position = 'absolute';
-      span.style.whiteSpace = 'pre-wrap';
-      span.style.wordBreak = 'break-word';
-      span.style.textAlign = 'center';
-      span.style.width = containerWidth + 'px';
-      span.style.fontSize = '20px';
-      span.style.lineHeight = '1.5';
-      span.textContent = textEl.textContent;
-      document.body.appendChild(span);
+      // Gradually reduce font size until text fits
+      let fontSize = 20;
+      textEl.style.fontSize = fontSize + 'px';
       
-      const textHeight = span.offsetHeight;
-      document.body.removeChild(span);
+      // Use a loop to ensure full text is visible without overflow
+      while (textEl.scrollHeight > availableHeight && fontSize > 12) {
+        fontSize -= 0.5;
+        textEl.style.fontSize = fontSize + 'px';
+      }
       
-      // Calculate needed scale
-      if (textHeight > containerHeight) {
-        const scale = containerHeight / textHeight;
-        const newFontSize = Math.max(12, Math.floor(20 * scale));
-        textEl.style.fontSize = newFontSize + 'px';
-        textEl.style.lineHeight = (1.5 * newFontSize / 20).toFixed(2);
+      // Ensure minimum font size for readability
+      if (fontSize < 12) {
+        textEl.style.fontSize = '12px';
       }
     }
 
@@ -377,8 +368,9 @@
       const verse = verses[index];
       verseTextEl.textContent = verse.text;
       verseRefEl.textContent = verse.ref;
-      // Adjust text size after content change
-      setTimeout(fitTextToContainer, 30);
+      
+      // Delay fitting to ensure DOM has updated
+      setTimeout(fitTextToContainer, 10);
     }
 
     function nextVerse() {
@@ -394,9 +386,7 @@
     window.addEventListener('load', () => {
       setTimeout(fitTextToContainer, 100);
     });
-    window.addEventListener('resize', () => {
-      setTimeout(fitTextToContainer, 100);
-    });
+    window.addEventListener('resize', fitTextToContainer);
 
     // Event listeners
     nextBtn.addEventListener('click', nextVerse);
@@ -405,4 +395,3 @@
   </script>
 </body>
 </html>
-
