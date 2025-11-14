@@ -1,94 +1,233 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>مقتبسات من الكتاب المقدس (عربية)</title>
+  <title>آية اليوم — الكتاب المقدس</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      direction: rtl;
-      text-align: right;
-      background-color: #fdfdfd;
-      color: #333;
-      padding: 10px;
       margin: 0;
+      font-family: 'Cairo', 'Tajawal', 'Segoe UI', sans-serif;
+      background: #f8fafc;
+      color: #2d3748;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px 10px;
+      box-sizing: border-box;
     }
-    #verse-box {
-      border: 2px solid #ccc;
-      border-radius: 8px;
-      padding: 15px;
-      background-color: #fff;
-      font-size: 20px;
-      line-height: 1.6;
-      min-height: 100px;
+    .widget {
+      width: 100%;
+      max-width: 460px;
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: 0 8px 28px rgba(0, 30, 60, 0.1);
+      padding: 28px 24px 24px;
+      text-align: right;
+      direction: rtl;
+      box-sizing: border-box;
+      border: 1px solid #e2e8f0;
+      position: relative;
+      overflow: hidden;
+    }
+    .widget::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(to bottom, #3182ce, #2b6cb0, #2c5282);
+      border-radius: 0 16px 16px 0;
+    }
+    .header {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      margin-bottom: 10px;
+      gap: 12px;
+      margin-bottom: 20px;
+      color: #2c5282;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.5px;
     }
-    .btn {
-      margin: 5px;
-      padding: 8px 15px;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 5px;
-      border: none;
-      background-color: #007acc;
+    .header svg {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, #e2e8f0, transparent);
+      margin: 20px 0;
+    }
+    .verse-text {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.65;
+      color: #1a202c;
+      margin: 0;
+      hyphens: auto;
+      word-break: break-word;
+      font-feature-settings: "ss01", "ss02";
+      text-shadow: 0 1px 1px rgba(0,0,0,0.02);
+    }
+    .verse-ref {
+      font-family: 'Tajawal', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      color: #4a5568;
+      margin-top: 14px;
+      display: block;
+      letter-spacing: -0.2px;
+    }
+    .decoration {
+      position: relative;
+      padding-right: 20px;
+      padding-left: 12px;
+    }
+    .decoration::before {
+      content: '״';
+      position: absolute;
+      right: -6px;
+      top: -4px;
+      font-size: 42px;
+      color: #cbd5e0;
+      font-family: 'Cairo', serif;
+      line-height: 1;
+      opacity: 0.6;
+    }
+    .decoration::after {
+      content: '״';
+      position: absolute;
+      left: -4px;
+      bottom: -16px;
+      font-size: 42px;
+      color: #cbd5e0;
+      font-family: 'Cairo', serif;
+      line-height: 1;
+      opacity: 0.6;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      margin-top: 22px;
+    }
+    .next-btn {
+      background: linear-gradient(135deg, #3182ce, #2b6cb0);
       color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 24px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 10px rgba(43, 108, 176, 0.3);
+      transition: all 0.25s ease;
     }
-    .btn:hover {
-      background-color: #005f99;
+    .next-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(43, 108, 176, 0.4);
+      background: linear-gradient(135deg, #2b6cb0, #2c5282);
+    }
+    .next-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 3px 8px rgba(43, 108, 176, 0.35);
+    }
+    .next-btn svg {
+      width: 18px;
+      height: 18px;
     }
   </style>
 </head>
 <body>
-
-  <div id="verse-box">اضغط التالي لعرض آية</div>
-  <button id="prev-btn" class="btn">الآية السابقة</button>
-  <button id="next-btn" class="btn">الآية التالية</button>
+  <div class="widget">
+    <div class="header">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-7-7z"/>
+        <path d="M11 13H9a2 2 0 0 1 0-4h2v4z"/>
+        <path d="M15 13h-2a2 2 0 1 0 0 4h2v-4z"/>
+      </svg>
+      آية اليوم
+    </div>
+    <div class="divider"></div>
+    <div class="decoration">
+      <div class="verse-text" id="verse-text">
+        لأنه هكذا أحب الله العالم حتى بذل ابنه الوحيد، لكي لا يهلك كل من يؤمن به، بل تكون له الحياة الأبدية.
+      </div>
+      <span class="verse-ref" id="verse-ref">يوحنا 3:16</span>
+    </div>
+    <div class="controls">
+      <button class="next-btn" id="next-btn">
+        <span>آية جديدة</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+  </div>
 
   <script>
     const verses = [
-      // Existing verses
-      "طوبى للفقراء بالروح لأن لهم ملكوت السماوات.",
-      "طوبى للحزانى لأنهم يُعزّون.",
-      "طوبى للودعاء لأنهم يرثون الأرض.",
-      "طوبى للجياع والعطاش إلى البر لأنهم يشبعون.",
-      "طوبى للرحماء لأنهم يُرحمون.",
-      "طوبى لنقيي القلب لأنهم يُبصرون الله.",
-      "طوبى لصانعي السلام لأنهم يُدعون أبناء الله.",
-      "طوبى للمضطهدين من أجل البر لأن لهم ملكوت السماوات.",
-      // New added verses
-      "لأنه هكذا أحب الله العالم حتى بذل ابنه الوحيد، لكي لا يهلك كل من يؤمن به، بل تكون له الحياة الأبدية." , // يوحنا 3:16 :contentReference[oaicite:0]{index=0}  
-      "قال له يسوع: «أنا هو الطريق والحق والحياة. ليس أحد يأتي إلى الآب إلا بي.»" , // يوحنا 14:6 :contentReference[oaicite:1]{index=1}  
-      "اطلبوا أولاً ملكوت الله وبرّه، وهذه كلها تُزاد لكم." , // متى 6:33 :contentReference[oaicite:2]{index=2}  
-      "الذي يؤمن بالابن له حياة أبدية." , // ضمن تفسير يوحنا 3:16 :contentReference[oaicite:3]{index=3}  
-      "من يؤمن ويعتمد يخلص." // من تفسير سفر مرقس في St‑Takla.com :contentReference[oaicite:4]{index=4}  
+      { text: "طوبى للفقراء بالروح، لأن لهم ملكوت السماوات.", ref: "متى 5:3" },
+      { text: "طوبى للحزانى، لأنهم يُعزّون.", ref: "متى 5:4" },
+      { text: "طوبى للودعاء، لأنهم يرثون الأرض.", ref: "متى 5:5" },
+      { text: "طوبى للجياع والعطاش إلى البر، فإنهم يشبعون.", ref: "متى 5:6" },
+      { text: "طوبى للرحماء، فإنهم يُرحمون.", ref: "متى 5:7" },
+      { text: "طوبى لأنقياء القلب، فإنهم يعاينون الله.", ref: "متى 5:8" },
+      { text: "طوبى لصانعي السلام، فإنهم أبناء الله يُدعون.", ref: "متى 5:9" },
+      { text: "طوبى للمطرودين من أجل البر، فإن لهم ملكوت السماوات.", ref: "متى 5:10" },
+      { text: "أنتم ملح الأرض... أنتم نور العالم.", ref: "متى 5:13-14" },
+      { text: "لا تقلقوا إذًا، قائلاً: ماذا نأكل؟ أو ماذا نشرب؟ أو ماذا نلبس؟", ref: "متى 6:31" },
+      { text: "اطلبوا أولاً ملكوت الله وبره، وهذه كلها تُزاد لكم.", ref: "متى 6:33" },
+      { text: "لا تذكروا الأيام القديمة، ولا تتفكروا في الأمور الأول.", ref: "إشعياء 43:18" },
+      { text: "ها أنا أصنع كل شيء جديدًا.", ref: "رؤيا 21:5" },
+      { text: "الرب نوري وخلاصي، ممن أخاف؟", ref: "مزمور 27:1" },
+      { text: "الرب راعيّ فلا يعوزني شيء.", ref: "مزمور 23:1" },
+      { text: "استريحوا واعلموا أني أنا الله.", ref: "مزمور 46:10" },
+      { text: "أثق لأنك أنت معى. يدك تهديني ويمناك تمسك بي.", ref: "مزمور 139:10" },
+      { text: "لا تَخَفْ، لأني معك. لا تَتَلَفَّتْ، لأني إلهك.", ref: "إشعياء 41:10" },
+      { text: "لأنه هكذا أحب الله العالم حتى بذل ابنه الوحيد، لكي لا يهلك كل من يؤمن به، بل تكون له الحياة الأبدية.", ref: "يوحنا 3:16" },
+      { text: "الذي آمن واعتمد يخلُص، والذي لم يؤمن يُدن.", ref: "مرقس 16:16" },
+      { text: "إِنَّ كُلَّ مَنْ يَدْعُو بِاسْمِ الرَّبِّ يَخْلُص.", ref: "رومية 10:13" },
+      { text: "وأما نحن فنحب، لأنه هو أحبنا أولاً.", ref: "1 يوحنا 4:19" },
+      { text: "إن أخطأ إليك أخوك فوبّخه، وإن تاب فاغفر له.", ref: "لوقا 17:3" },
+      { text: "فإن الذي بدأ فيكم عملاً صالحاً يُكمله إلى يوم يسوع المسيح.", ref: "فيلبي 1:6" },
+      { text: "أستطيع كل شيء في المسيح الذي يقويني.", ref: "فيلبي 4:13" },
+      { text: "أما الذين قبلوه، فأعطاهم سلطانًا أن يصيروا أولاد الله.", ref: "يوحنا 1:12" },
+      { text: "إِنَّ الرَّبَّ قَرِيبٌ مِنْ كُلِّ الَّذِينَ يَدْعُونَهُ، مِنْ كُلِّ الَّذِينَ يَدْعُونَهُ بِالْحَقِّ.", ref: "مزمور 145:18" },
+      { text: "مُحْتَمِلِينَ بَعْضُكُمْ بَعْضًا، وَمُسَامِحِينَ بَعْضُكُمْ بَعْضًا.", ref: "كولوسي 3:13" },
+      { text: "فَإِنَّ الإِيمَانَ بِالْقَلْبِ يُؤَدِّي إِلَى الْبِرِّ، وَالاعْتِرَافَ بِالْفَمِ إِلَى الْخَلاَصِ.", ref: "رومية 10:10" },
+      { text: "وَإِنْ كَانَ لِي كُلُّ الإِيمَانِ حَتَّى أَنْقُلَ الْجِبَالَ، وَلَكِنْ لَيْسَ لِي مَحَبَّةٌ، فَلَسْتُ شَيْئًا.", ref: "1 كورنثوس 13:2" }
     ];
 
-    let currentIndex = 0;
-    const verseBox = document.getElementById('verse-box');
+    let currentVerseIndex = 0;
+    const verseTextEl = document.getElementById('verse-text');
+    const verseRefEl = document.getElementById('verse-ref');
     const nextBtn = document.getElementById('next-btn');
-    const prevBtn = document.getElementById('prev-btn');
 
     function showVerse(index) {
-      verseBox.textContent = verses[index];
+      const verse = verses[index];
+      verseTextEl.textContent = verse.text;
+      verseRefEl.textContent = verse.ref;
     }
 
-    nextBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % verses.length;
-      showVerse(currentIndex);
-    });
+    function nextVerse() {
+      currentVerseIndex = (currentVerseIndex + 1) % verses.length;
+      showVerse(currentVerseIndex);
+    }
 
-    prevBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + verses.length) % verses.length;
-      showVerse(currentIndex);
-    });
+    nextBtn.addEventListener('click', nextVerse);
 
-    // shows first verse on load
-    showVerse(currentIndex);
+    // Initialize with first verse
+    showVerse(currentVerseIndex);
   </script>
-
 </body>
 </html>
